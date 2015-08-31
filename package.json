@@ -1,0 +1,25 @@
+{
+  "name": "speedtest",
+  "version": "1.0.0",
+  "description": "Speedtest.net project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stantaylor/speedtest.git"
+  },
+  "keywords": [
+    "speedtest"
+  ],
+  "author": "Stan Taylor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stantaylor/speedtest/issues"
+  },
+  "homepage": "https://github.com/stantaylor/speedtest#readme",
+  "devDependencies": {
+    "speedtest-net": "^1.1.0"
+  }
+}
