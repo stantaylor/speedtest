@@ -2,30 +2,35 @@ var moment = require('moment');
 moment().format();
 var fs = require('fs');
 var speedTest = require('speedtest-net');
+var mysql      = require('mysql');
 
 test = speedTest({maxTime: 5000});
 
 test.on('data', function (data) {
 
-  var now = new Date();
+  var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : 'r1937Freud',
+    database : 'speedtest'
+  });
+ 
+  connection.connect();
 
-  console.log('Date      : ' + new Date());
-  var date = moment(now).format('YYYY-MM-DD HH:MM:SS');
-  var ping = data.server.ping;
-  var download = data.speeds.download;
-  var upload = data.speeds.upload;
-  var server = data.server.host;
+  var query = 'INSERT INTO speedtest (ping,download,upload,server)  VALUES (' 
+		+ data.server.ping + ',' 
+		+ data.speeds.download + ',' 
+		+ data.speeds.upload + ',\'' 
+		+ data.server.host 
+		+ '\')';
+  console.log(query);
 
-  var line = date + ',' + +ping + ',' + download + ',' + upload + ',' + server + '\n';
-  //console.log(line);
+  connection.query(query, function(err, rows, fields) {
+    if (err) throw err;
+  });
+ 
+  connection.end();
 
-  fs.appendFile('speedtest.txt', line,
-    function (err) {
-      if (err) throw(err);
-      console.log('Wrote line to file: ' + line);
-      //console.log(data);
-    }
-  );
 });
 
 test.on('error', function (err) {
